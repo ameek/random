@@ -1,79 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Classic Clock</title>
-<style>
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-}
+  <title>Classic Clock</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-.clock {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background-color: #fff;
-  position: relative;
-}
+    .clock {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background-color: #fff;
+      position: relative;
+    }
 
-.face {
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  background-color: #ccc;
-  position: absolute;
-  top: 25px;
-  left: 25px;
-}
+    .face {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background-color: #ccc;
+      position: absolute;
+      top: 125px;
+      left: 25px;
+    }
 
-.hour, .minute, .second {
-  width: 10px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #000;
-  position: absolute;
-  top: 50%;
-}
+    .hands {
+      width: 6px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #000;
+      position: absolute;
+      top: 50%;
+      transform-origin: bottom center;
+    }
+    .hour {
+      left: 147px;
+    }
 
-.hour {
-  left: 50%;
-}
+    .minute {
+      left: 147px;
+    }
 
-.minute {
-  left: 50%;
-  transform: rotate(-30deg);
-}
-
-.second {
-  left: 50%;
-  transform: rotate(-60deg);
-}
-</style>
+    .second {
+      left: 147px;
+    }
+  </style>
 </head>
 <body>
-<div class="clock">
-  <div class="face"></div>
-  <div class="hour"></div>
-  <div class="minute"></div>
-  <div class="second"></div>
-</div>
-<script>
-const clock = document.querySelector(".clock");
-const hour = document.querySelector(".hour");
-const minute = document.querySelector(".minute");
-const second = document.querySelector(".second");
+  <div class="clock">
+    <div class="face"></div>
+    <div class="hour hands"></div>
+    <div class="minute hands"></div>
+    <div class="second hands"></div>
+  </div>
+  <script>
+    const hour = document.querySelector(".hour");
+    const minute = document.querySelector(".minute");
+    const second = document.querySelector(".second");
 
-setInterval(() => {
-  const now = new Date();
-  const hourAngle = (now.getHours() * 360) / 12;
-  const minuteAngle = (now.getMinutes() * 360) / 60;
-  const secondAngle = (now.getSeconds() * 360) / 60;
+    function updateClock() {
+      const now = new Date();
+      const hourAngle = (now.getHours() % 12 + now.getMinutes() / 60) * 360 / 12;
+      const minuteAngle = (now.getMinutes() + now.getSeconds() / 60) * 360 / 60;
+      const secondAngle = (now.getSeconds()) * 360 / 60;
 
-  hour.style.transform = `rotate(${hourAngle}deg)`;
-  minute.style.transform = `rotate(${minuteAngle}deg)`;
-  second.style.transform = `rotate(${secondAngle}deg)`;
-}, 1000);
-</script>
+      hour.style.transform = `rotate(${hourAngle}deg)`;
+      minute.style.transform = `rotate(${minuteAngle}deg)`;
+      second.style.transform = `rotate(${secondAngle}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // Update immediately when the page loads
+  </script>
 </body>
 </html>
